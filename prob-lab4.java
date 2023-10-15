@@ -37,6 +37,11 @@ class Tir{
         remorci = new Remorca[maxRemorci];
         nrRemorci = 0; //initializam cu 0
     }
+    //sau specific problemei putem avea constructorul:
+    /*public Tir(){
+        this.remorci = new Remorca[5];
+        this.nrRemorci = 0;
+    }*/
 
     public boolean adaugaRemorca(int nrCutii, String nrInmatriculare){
         if(nrRemorci< remorci.length) {
