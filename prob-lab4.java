@@ -1,21 +1,24 @@
 class Remorca{
+    private static int nrCutiiUltimaRemorca =10;
     private int nrCutii;
     private String nrInmatriculare;
 
     //acum facem constructorii
-
     //primul constructor:
     public Remorca(int nrCutii, String nrInmatriculare){
         this.nrCutii=nrCutii;
         this.nrInmatriculare=nrInmatriculare;
+        nrCutiiUltimaRemorca = nrCutii;
     }
 
-    //al doilea constructor
+    //al doilea constructor:
     public Remorca(String nrInmatriculare){
         this.nrInmatriculare=nrInmatriculare;
-        nrCutii=10;         //initializam cu 10 fiindca nu avem alte remorci inca
-    }
+        this.nrCutii = nrCutiiUltimaRemorca + 1;
+        nrCutiiUltimaRemorca = this.nrCutii;
 
+    }
+    
     public int getNrCutii() {
         return nrCutii;
     }
