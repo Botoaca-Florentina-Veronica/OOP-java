@@ -26,7 +26,7 @@ class Telefon {
     public int numarDeApeluri(String nume) {
         int nrApeluri = 0;
         int i;
-        for (i = 0; i < count; i++) {
+        for (i=0; i<count; i++) {
             if (nume.equals(apelatori[i])) {
                 nrApeluri++;
             }
@@ -38,11 +38,11 @@ class Telefon {
         int i;
         String rezultat = "Proprietar: " + numeProprietar + "\n";
         rezultat = rezultat + "Apelatori: ";
-        for (i = 0; i < count; i++) {
+        for (i=0; i<count; i++) {
             if (apelatori[i] != null) {
                 rezultat = rezultat + apelatori[i];
                 if (i < count - 1) {
-                    rezultat = rezultat + ", ";
+                    rezultat = rezultat + ",";
                 }
             }
         }
@@ -57,7 +57,7 @@ public class Main {
         Random random = new Random();
         int i;
 
-        System.out.print("Cate telefoane trebuie create: ");
+        System.out.println("Cate telefoane trebuie create: ");
         int numarTelefoane = scanner.nextInt();
         Telefon[] telefoane = new Telefon[numarTelefoane];
 
@@ -70,12 +70,10 @@ public class Main {
         System.out.print("Numarul de apeluri de efectuat (A): ");
         int A = scanner.nextInt();
 
-        for (i = 0; i < A; i++) {
-            int x = random.nextInt(numarTelefoane);
-            int y = random.nextInt(numarTelefoane);
-            if (x != y) {
-                telefoane[x].apeleaza(telefoane[y]);
-            }
+        for (i=0; i<A; i++) {
+            int x = random.nextInt(numarTelefoane);   //x=telefoane sursa
+            int y = random.nextInt(numarTelefoane);   //y=telefoane destinatie
+            telefoane[x].apeleaza(telefoane[y]);
         }
 
         System.out.print("Numele proprietarului pentru a verifica apelurile: ");
