@@ -55,12 +55,13 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
+        int i;
 
         System.out.print("Cate telefoane trebuie create: ");
         int numarTelefoane = scanner.nextInt();
         Telefon[] telefoane = new Telefon[numarTelefoane];
 
-        for (int i = 0; i < numarTelefoane; i++) {
+        for (i = 0; i < numarTelefoane; i++) {
             System.out.print("Numele proprietarului telefonului " + (i + 1) + ": ");
             String numeProprietar = scanner.next();
             telefoane[i] = new Telefon(numeProprietar);
@@ -69,7 +70,7 @@ public class Main {
         System.out.print("Numarul de apeluri de efectuat (A): ");
         int A = scanner.nextInt();
 
-        for (int i = 0; i < A; i++) {
+        for (i = 0; i < A; i++) {
             int x = random.nextInt(numarTelefoane);
             int y = random.nextInt(numarTelefoane);
             if (x != y) {
