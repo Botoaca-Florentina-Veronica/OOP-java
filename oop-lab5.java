@@ -1,88 +1,112 @@
 import java.util.Random;
 import java.util.Scanner;
 
-class Telefon {
-    private String numeProprietar;
+class Telefon{
     private static int count = 0;
     private String[] apelatori = new String[100];
+    private String numeProprietar;
 
-    public Telefon(String numeProprietar) {
+
+    //facem constructorul
+    public Telefon(String numeProprietar){
         this.numeProprietar = numeProprietar;
     }
 
-    public void adaugaApelator(String nume) {
-        apelatori[count] = nume;
-        count++;
+    public String getNumeProprietar()
+    {
+        return numeProprietar;
     }
-
-    public boolean apeleaza(Telefon telefonApelat) {
-        if (count < 100) {
-            telefonApelat.adaugaApelator(numeProprietar);
+    public boolean apeleaza(Telefon telefonProprietar){
+        if(count<100)
+        {
+            telefonProprietar.adaugaNrTelefon(numeProprietar);
             return true;
         }
         return false;
     }
 
-    public int numarDeApeluri(String nume) {
-        int nrApeluri = 0;
+
+    public void adaugaNrTelefon(String nume){
+        apelatori[count]=nume;
+        count++;
+    }
+
+    public int nrDeApeluri(String nume){
         int i;
-        for (i=0; i<count; i++) {
-            if (nume.equals(apelatori[i])) {
+        int nrApeluri=0;
+        for(i=0; i<count; i++)
+        {
+            if(nume.equals(apelatori[i]))
+            {
                 nrApeluri++;
             }
         }
         return nrApeluri;
     }
 
-    public String toString() {
-        int i;
+    public String toString(){
         String rezultat = "Proprietar: " + numeProprietar + "\n";
         rezultat = rezultat + "Apelatori: ";
-        for (i=0; i<count; i++) {
-            if (apelatori[i] != null) {
+        int i;
+        for(i=0; i<count; i++)
+        {
+            if(apelatori[i]!=null)
+            {
                 rezultat = rezultat + apelatori[i];
-                if (i < count - 1) {
+                if(i<count-1)
+                {
                     rezultat = rezultat + ",";
                 }
             }
         }
         return rezultat;
     }
-
 }
 
-public class Main {
-    public static void main(String[] args) {
+class Main{
+    public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
+
         int i;
+        String numeProprietar;
+        int nrTelefoane;
 
-        System.out.println("Cate telefoane trebuie create: ");
-        int numarTelefoane = scanner.nextInt();
-        Telefon[] telefoane = new Telefon[numarTelefoane];
 
-        for (i = 0; i < numarTelefoane; i++) {
-            System.out.print("Numele proprietarului telefonului " + (i + 1) + ": ");
-            String numeProprietar = scanner.next();
+        System.out.print("Introduceti numarul de de telefoane: ");
+        nrTelefoane = scanner.nextInt();
+
+        Telefon[] telefoane = new Telefon[nrTelefoane];
+
+        System.out.println("Introduceti numele proprietarilor pentru telefoanele create");
+        for(i=0; i<nrTelefoane; i++) {
+            System.out.print("Proprietar " + (i+1) + ":");
+            numeProprietar = scanner.next();
             telefoane[i] = new Telefon(numeProprietar);
         }
 
-        System.out.print("Numarul de apeluri de efectuat (A): ");
+        System.out.print("Introduceti numarul de apeluri de efectuat(A): ");
         int A = scanner.nextInt();
-
-        for (i=0; i<A; i++) {
-            int x = random.nextInt(numarTelefoane);   //x=telefoane sursa
-            int y = random.nextInt(numarTelefoane);   //y=telefoane destinatie
+        for(i=0; i<A; i++)
+        {
+            int x, y;
+            x = random.nextInt(nrTelefoane);
+            //ii dau un numar random care sa fie cuprins intre 0 si nrTelefoane
+            y = random.nextInt(nrTelefoane);
             telefoane[x].apeleaza(telefoane[y]);
+            // x = telefoane sursa
+            //y = telefoane destinatie
         }
 
-        System.out.print("Numele proprietarului pentru a verifica apelurile: ");
-        String numeVerificare = scanner.next();
+        System.out.print("Introduceti numele proprietarului carui doriti sa ii aflati datele:");
+        String proprietarVerificare = scanner.next();
+        System.out.println();
 
-        for (Telefon telefon : telefoane) {
-            System.out.println(telefon);
-            int nrApeluri = telefon.numarDeApeluri(numeVerificare);
-            System.out.println("Număr de apeluri pentru " + numeVerificare + ": " + nrApeluri);
+        for (i=0; i<nrTelefoane; i++)
+        {
+            System.out.println(telefoane[i]);
+            int nrApeluri = telefoane[i].nrDeApeluri(proprietarVerificare);
+            System.out.println("Număr de apeluri pentru " + proprietarVerificare + ": " + nrApeluri);
             System.out.println();
         }
     }
