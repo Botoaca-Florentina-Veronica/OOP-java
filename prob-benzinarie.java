@@ -93,22 +93,10 @@ class Benzinarie{
             if (cantitateDisponibila >= coada[i].getCapacitate())
             {
                 cantitateDisponibila = cantitateDisponibila - coada[i].getCapacitate();
+                coada[i] = null;
             }
         }
-        // Eliminăm mașinile alimentate din coada de așteptare
-        int j;
-        if (i > 0)
-        {
-            for (j = i; j<count; j++)
-            {
-                coada[j - i] = coada[j];
-            }
-            for (j = count - i; j<count; j++)
-            {
-                coada[j] = null;
-            }
-            count -= i;
-        } // mai lucreaza la functia asta!!
+        count = 0;  //mai lucreaza la functia asta!
     }
 }
 
@@ -119,6 +107,7 @@ class Main{
         Masina mercedes = new Masina(5, "21VSB45");
         Masina audi = new Masina(10 , "34GTR67");
         Masina bmw = new Masina(15, "69GHT21");
+
 
         benzinarie.alimenteazaMasina(mercedes);
         benzinarie.alimenteazaMasina(audi);
