@@ -1,3 +1,4 @@
+
 /*
 Într-un program de gestiune avem douä clase: Benzinärie si Masinä. O Masinä e caracterizatä de numärul ei de înmatriculare (String) si cantitatea de benzinä în litrii (int) care fi este necesarä pentru alimentare. Aceste caracteristici sunt setate prin constructor.
  Clasa poate sä continã si alte elemente considerate necesare.
@@ -74,7 +75,7 @@ class Benzinarie{
         {
             //ma plimb cu idexul i pana la finalul cozii
             rezultat = rezultat + "Masina: " + (i+1) + "-numar inmatriculare: " + coada[i].getNrInmatriculare() + " -cantitate necesara "
-             + coada[i].getCapacitate();
+                    + coada[i].getCapacitate();
             if(i<count-1)
             {
                 rezultat = rezultat + "," + "\n";
@@ -84,19 +85,29 @@ class Benzinarie{
     }
 
 
-    public void alimenteazaBenzinarie(int cantitateDeAdaugat) {
-        cantitateDisponibila = cantitateDisponibila + cantitateDeAdaugat;
-        int i = 0;
-        //dupa ce am primit noua cantitate de combustibil, vreau acum sa il distribui din nou
-        //masinilor de la coada, in ordinea acestora la rand si in limita stocului disponibil
-        for(i=0; i<count; i++){
-            if (cantitateDisponibila >= coada[i].getCapacitate())
+    public void alimenteazaBenzinarie(int combustibil){
+        cantitateDisponibila = cantitateDisponibila + combustibil;
+        int i, j;
+        if(count!=0)
+        {
+            for(i=0; i<count; i++)
             {
-                cantitateDisponibila = cantitateDisponibila - coada[i].getCapacitate();
-                coada[i] = null;
+                if(cantitateDisponibila < coada[i].getCapacitate())
+                {
+                    return;
+                }
+                else
+                {
+                    cantitateDisponibila = cantitateDisponibila - coada[i].getCapacitate();
+                    for(j=i; j<count-1; j++)
+                    {
+                        coada[j]=coada[j+1];
+                    }
+                    count--;
+                }
             }
         }
-        count = 0;  //mai lucreaza la functia asta!
+        else return;
     }
 }
 
