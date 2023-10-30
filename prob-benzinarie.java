@@ -99,11 +99,13 @@ class Benzinarie{
                 else
                 {
                     cantitateDisponibila = cantitateDisponibila - coada[i].getCapacitate();
-                    for(j=i; j<count-1; j++)
+                   for(j=i; j<count-1; j++)
                     {
+                        //vreau sa imi dispara din coada masina aflata la indexul i, fiindca doar ce am alimentat-o
+                        //deci acum, voi shifta spre dreapta cu o masina restul cozii
                         coada[j]=coada[j+1];
                     }
-                    count--;
+                    count--; //scad din totalul masinilor, cea pe care tocmai am alimentat-o
                 }
             }
         }
