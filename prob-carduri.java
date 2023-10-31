@@ -49,7 +49,7 @@ class Portofel{
         int i;
         for(i=0; i<count; i++)
         {
-            if(carduri[i].getNumarCard() == numarCard)
+            if(carduri[i].getNumarCard().equals(numarCard))
             {
                 //inseamna ca avem acest card deja in portofel, deci returnez false
                 return false;
