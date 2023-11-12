@@ -1,3 +1,4 @@
+
 /*
     Consideram o colectie de greutati in cadrul careia elementele sunt retinute sub
 forma unui tablou. Fiecare greutate are o anumita capacitate care poate fi obtinuta apeland metoda public int capacitate() pe care o are fiecare greutate.
