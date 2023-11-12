@@ -99,17 +99,17 @@ class Main {
     public static void main(String[] args) {
 
         Airplane airplane1 = new Airplane("A1", 1000);
-        PassengerAirplane airplane2 = new PassengerAirplane("P1", 1500, 200);
-        Concorde concorde = new Concorde("C1", 2000, 100);
-        FighterJet fighterJet = new FighterJet("F1", 1800);
-        Mig mig = new Mig("M1", 1600);
-        TomCat tomCat = new TomCat("T1", 1700);
+        Airplane airplane2 = new PassengerAirplane("P1", 1500, 200);
+        Airplane concorde = new Concorde("C1", 2000, 100);
+        Airplane fighterJet = new FighterJet("F1", 1800);
+        Airplane mig = new Mig("M1", 1600);
+        Airplane tomCat = new TomCat("T1", 1700);
 
         airplane1.takeOff();
         airplane2.fly();
-        concorde.goSuperSonic();
-        fighterJet.launchMissile();
-        mig.highSpeedGeometry();
-        tomCat.refuel();
+        ((Concorde) concorde).goSuperSonic(); // Downcast pentru a apela metode specifice Concorde
+        ((FighterJet) fighterJet).launchMissile(); // Downcast pentru a apela metode specifice FighterJet
+        ((Mig) mig).highSpeedGeometry(); // Downcast pentru a apela metode specifice Mig
+        ((TomCat) tomCat).refuel(); // Downcast pentru a apela metode specifice TomCat
     }
 }
