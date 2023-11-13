@@ -23,105 +23,123 @@ acestui tip de greutate nu va fi retinuta intr-un atribut, ci va fi calculata de
     • o metoda main in care se va crea un obiect ColectieGreutati, cateva greutati simple, duble si multiple care vor fi adaugate colectiei de greutati. Se va afisa
 greutatea medie a colectiei.
 */
-class Greutate {
-    private int capacitate;
 
-    public Greutate(int capacitate) {
+class Greutate{
+    private int capacitate;
+    public Greutate(int capacitate){
         this.capacitate = capacitate;
     }
 
-    public int capacitate() {
+    public int capacitate(){
         return capacitate;
     }
 }
 
-class GreutateDubla extends Greutate {
-    private Greutate greutate1;
-    private Greutate greutate2;
+class greutateDubla extends Greutate{
+    private Greutate g1;
+    private Greutate g2;
 
-    public GreutateDubla(Greutate greutate1, Greutate greutate2) {
+    //facem constructorul:
+    public greutateDubla(Greutate g1, Greutate g2){
         super(0);
-        this.greutate1 = greutate1;
-        this.greutate2 = greutate2;
+        this.g1=g1;
+        this.g2=g2;
     }
 
-    public void setGreutate1(Greutate g) {
-        greutate1 = g;
+    public void setGreutate1(Greutate g){
+        g1=g;
     }
 
-    public void setGreutate2(Greutate g) {
-        greutate2 = g;
+    public void setGreutate2(Greutate g){
+        g2=g;
     }
 
-    @Override
-    public int capacitate() {
-        return greutate1.capacitate() + greutate2.capacitate();
+    //override
+    public int capacitate(){
+        int suma_totala = 0;
+        suma_totala = suma_totala + g1.capacitate() + g2.capacitate();
+        return suma_totala;
     }
 }
 
-class GreutateMultipla extends Greutate {
+class greutatiMultiple extends Greutate{
     private Greutate[] greutati;
 
-    public GreutateMultipla(Greutate... greutati) {
+    //facem constructorul:
+    public greutatiMultiple(Greutate... greutati){
         // ... (varargs syntax) let you pass any number of 'Greutate' objects when creating an instance of 'GreutateMultipla'.
         // You can pass zero or more 'Greutate' objects, and they will be treated as an array inside the method.
         super(0);
         this.greutati = greutati;
     }
 
-    @Override
-    public int capacitate() {
-        int sumaCapacitatilor = 0;
-        for (Greutate g : greutati) 
-        {
-            sumaCapacitatilor = sumaCapacitatilor + g.capacitate();
+    public int capacitate(){
+        int suma_totala = 0;
+        int i;
+        for(i=0; i<greutati.length; i++){
+            suma_totala = suma_totala + greutati[i].capacitate();
         }
-        return sumaCapacitatilor;
+        return suma_totala;
     }
 }
 
-class ColectieGreutati {
+class ColectieGreutati{
     private Greutate[] greutati;
     private int capacitateMaxima;
+    private int index;
 
-    public ColectieGreutati(int capacitateMaxima) {
+    //facem constructorul:
+    public ColectieGreutati(int capacitateMaxima){
         this.capacitateMaxima = capacitateMaxima;
         this.greutati = new Greutate[capacitateMaxima];
+        index =0;
     }
 
-    public void adauga(Greutate g) {
-        boolean added = false;
+    public void adauga(Greutate g){
+        if(index<greutati.length){
+            greutati[index++] = g;
+        }
+        else{
+            System.out.println("Nu mai este loc pentru a aduga alta greutate!");
+        }
+    }
 
-        for (int i = 0; i < greutati.length; i++) {
-            if (greutati[i] == null) 
-            {
+    //sau:
+   /* public void adauga(Greutate g){
+        boolean flag = false;
+        int i;
+        for(i=0; i<greutati.length; i++){
+            if(greutati[i] == null){
+                //aici verific daca ma aflu la inceputul vectorului, pentru a adauga noua mea greutate.
+                //daca greutati[i] este diferit de null, inseamna ca am deja o greutate la acea adresa, deci nu vreau sa suprascriu
+                //peste greutatea veche pentru a o introduce pe cea noua, asa ca verific sa nu am nimic(null) la momentul adaugarii
                 greutati[i] = g;
-                added = true;
+                flag=true;
                 break;
             }
         }
-
-        if (!added) 
-        {
-            System.out.println("Colectia este plina. Nu s-a putut adauga greutatea.");
+        if(!flag){
+            System.out.println("Nu mai este loc pentru a aduga alta greutate!");
         }
     }
+    */
 
-    public double medie() {
-        if (greutati.length == 0) 
+    public double medie(){
+        int suma=0;
+        double medie;
+        int i;
+        if (greutati.length == 0)
         {
             return 0; // To avoid division by zero
         }
 
-        int sumaCapacitatilor = 0;
-        for (Greutate g : greutati) {
-            if (g != null) 
-            {
-                sumaCapacitatilor += g.capacitate();
+        for(i=0; i<greutati.length; i++){
+            if(greutati[i] != null){
+                suma = suma + greutati[i].capacitate();
             }
         }
-
-        return (double) sumaCapacitatilor / greutati.length;
+        medie = (double) suma/greutati.length;
+        return medie;
     }
 }
 
@@ -132,12 +150,12 @@ public class Main {
         Greutate greutate1 = new Greutate(5);
         Greutate greutate2 = new Greutate(8);
 
-        GreutateDubla greutateDubla = new GreutateDubla(greutate1, greutate2);
+        greutateDubla greutateDubla = new greutateDubla(greutate1, greutate2);
 
         Greutate greutate3 = new Greutate(10);
         Greutate greutate4 = new Greutate(7);
 
-        GreutateMultipla greutateMultipla = new GreutateMultipla(greutate3, greutate4);
+        greutatiMultiple greutateMultipla = new greutatiMultiple(greutate3, greutate4);
 
         colectie.adauga(greutate1);
         colectie.adauga(greutateDubla);
