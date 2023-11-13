@@ -164,3 +164,181 @@ public class Main {
         System.out.println("Greutatea medie a colectiei: " + colectie.medie());
     }
 }
+
+
+
+
+
+
+/*
+Se cere sa se modeleze o garnitura de tren. Se va defini in acest scop o clasa Tren.
+Un obiect de tip Tren contine mai multe referinte spre obiecte de tip Vagon care
+sunt pastrate intr-un tablou. Un vagon poate fi de 3 tipuri: CalatoriA, CalatoriB
+si Marfa. Despre garnitura de tren si vagoane mai cunoastem urmatoarele:
+• un tren poate contine maxim 15 vagoane, indiferent de tipul vagoanelor. Vagoanele
+sunt atasate trenului la crearea lui.
+• un vagon de tip CalatoriA
+– are capacitatea de 40 pasageri si 300 colete postale.
+– furnizeaza doua servicii pentru deschiderea, respectiv inchiderea automata
+a usilor.
+• un vagon de tip CalatoriB
+– are capacitatea de 50 pasageri si 400 colete postale.
+– furnizeaza doua servicii pentru deschiderea, respectiv inchiderea automata
+a usilor.
+– fiind un vagon mai nou, furnizeaza un serviciu automat pentru blocarea
+geamurilor.
+• un vagon de tip Marfa
+– are capacitatea de 400 colete po¸stale.
+– nu furnizeaza servicii pentru deschiderea, respectiv inchiderea automata a
+usilor, aceste operatii executandu-se manual. Atentie: se interzice existenta
+metodelor pentru deschiderea, respectiv inchiderea automata a usilor in
+clasa ce modeleaza acest tip de vogon.
+Se cere:
+• sa se construiasca diagrama UML pentru clasele identificate pe baza descrierii
+anterioare.
+• sa se implementeze clasa care modeleaza conceptul de vagon impreuna cu eventualele sale clase derivate. Se mentioneaza ca apelurile serviciilor pentru deschiderea, respectiv
+inchiderea usilor, blocarea geamurilor vor afisa pe ecran
+un mesaj corespunzator, spre exemplu, apelul serviciului pentru blocarea geamurilor ar putea tipari “Geamurile s-au blocat”. Implementarea se va face
+astfel incat valorile asociate numarului de pasageri, colete sa nu fie stocate in diverse campuri ale vagoanelor.
+ */
+
+ class Vagon{
+
+     public int getNumarColete(){
+         return 0;
+     }
+     public void deschidereUsi(){
+         System.out.println("Usile s-au deschis!");
+     }
+
+     public void inchidereUsi(){
+         System.out.println("Usile s-au inchis!");
+     }
+
+     public String getTipVagon(){
+         return "Vagon normal";
+     }
+ }
+
+ class CalatoriA extends Vagon{
+     private int numarPasageri =40;
+     private int numarColete = 300;
+     //nu folosesc constructori fiindca valorile date de numarul de colete/pasageri e mereu constant (in functie de tipul de vagon)
+ }
+
+ class CalatoriB extends Vagon{
+    private int numarPasageri = 50;
+    private int numarColete = 400;
+
+     public void inchidereGeamuri(){
+         System.out.println("Geamurile s-au blocat!");
+     }
+
+     public int getNumarColete(){
+         return numarColete;
+     }
+
+     //suprascriere
+     public String getTipVagon(){
+         return "Vagon Calatori B";
+     }
+ }
+
+ class Marfa extends Vagon{
+    private int numarColete = 400;
+
+    public String getTipVagon(){
+        return "Vagon Marfa";
+    }
+
+    public int getNumarColete(){
+        return numarColete;
+    }
+ }
+
+
+// clasa Tren care contine o colectie de vagoane
+class Tren{
+    private Vagon[] vagoane;
+    private int numarVagoane;
+
+    //facem constructorul:
+    public Tren(){
+        this.vagoane = new Vagon[15];
+        numarVagoane = 0;
+    }
+
+    public void adaugaVagon(Vagon vagon){
+        if(numarVagoane < vagoane.length){
+            //inseamna ca mai avem loc pentru a adauga inca un vagon:
+            vagoane[numarVagoane++] = vagon;
+        }
+        else {
+            System.out.println("Trenul este plin! Nu se mai pot adauga alte vagoane!");
+        }
+    }
+
+    public void afiseazaVagoane(){
+        int i;
+        System.out.println("Tipurile de vagoane din tren sunt: ");
+        for(i=0; i<vagoane.length; i++){
+            if(vagoane[i] != null){
+                System.out.println(vagoane[i].getTipVagon());
+            }
+        }
+    }
+
+    public boolean equals(Tren tren){
+        int i;
+        int numarColeteTren1 = 0;
+        int numarColeteTren2 = 0;
+
+        //calculam numarul de colete pentru trenul dat spre verificare ca parametru:
+        for(i=0; i<tren.numarVagoane; i++){
+            numarColeteTren1 = numarColeteTren1 + tren.vagoane[i].getNumarColete();
+        }
+
+        //calculam numarul de colete pentru trenul nostru creeat anterior
+        for(i=0; i<numarVagoane; i++){
+            numarColeteTren2 = numarColeteTren2 + vagoane[i].getNumarColete();
+        }
+
+        if(numarColeteTren1 == numarColeteTren2){
+            return true;
+        }
+        else {
+             return false;
+        }
+    }
+}
+
+class Main{
+     public static void main(String[] args){
+         Tren tren1 = new Tren();
+
+         Vagon calatoriA1 = new CalatoriA();
+         Vagon calatoriB1 = new CalatoriB();
+         Vagon marfa1 = new Marfa();
+
+         tren1.adaugaVagon(calatoriA1);
+         tren1.adaugaVagon(calatoriB1);
+         tren1.adaugaVagon(marfa1);
+
+         Tren tren2 = new Tren();
+
+         Vagon calatoriA2 = new CalatoriA();
+         Vagon calatoriB2 = new CalatoriB();
+         Vagon marfa2 = new Marfa();
+
+         tren2.adaugaVagon(calatoriA2);
+         tren2.adaugaVagon(calatoriB2);
+         tren2.adaugaVagon(marfa2);
+
+         //testare metoda equals
+         System.out.println("Cele 2 trenuri sunt egale: " + tren1.equals(tren2));
+
+         //testare metoda afiseaza tipuri vagoane
+         tren1.afiseazaVagoane();
+
+     }
+}
