@@ -24,9 +24,13 @@ acestui tip de greutate nu va fi retinuta intr-un atribut, ci va fi calculata de
 greutatea medie a colectiei.
 */
 
-class Greutate{
+abstract class Greutate{
+    public abstract int capacitate();
+}
+
+class GreutateSimpla extends Greutate{
     private int capacitate;
-    public Greutate(int capacitate){
+    public GreutateSimpla(int capacitate){
         this.capacitate = capacitate;
     }
 
@@ -41,7 +45,6 @@ class greutateDubla extends Greutate{
 
     //facem constructorul:
     public greutateDubla(Greutate g1, Greutate g2){
-        super(0);
         this.g1=g1;
         this.g2=g2;
     }
@@ -69,7 +72,6 @@ class greutatiMultiple extends Greutate{
     public greutatiMultiple(Greutate... greutati){
         // ... (varargs syntax) let you pass any number of 'Greutate' objects when creating an instance of 'GreutateMultipla'.
         // You can pass zero or more 'Greutate' objects, and they will be treated as an array inside the method.
-        super(0);
         this.greutati = greutati;
     }
 
@@ -134,6 +136,7 @@ class ColectieGreutati{
         }
 
         for(i=0; i<greutati.length; i++){
+            //aici la lab mi-a dat eroare si a mers cand am scris in loc de greutati.length, index...investigheaza!!
             if(greutati[i] != null){
                 suma = suma + greutati[i].capacitate();
             }
@@ -147,13 +150,13 @@ public class Main {
     public static void main(String[] args) {
         ColectieGreutati colectie = new ColectieGreutati(10);
 
-        Greutate greutate1 = new Greutate(5);
-        Greutate greutate2 = new Greutate(8);
+        Greutate greutate1 = new GreutateSimpla(5);
+        Greutate greutate2 = new GreutateSimpla(8);
 
         greutateDubla greutateDubla = new greutateDubla(greutate1, greutate2);
 
-        Greutate greutate3 = new Greutate(10);
-        Greutate greutate4 = new Greutate(7);
+        Greutate greutate3 = new GreutateSimpla(10);
+        Greutate greutate4 = new GreutateSimpla(7);
 
         greutatiMultiple greutateMultipla = new greutatiMultiple(greutate3, greutate4);
 
@@ -164,9 +167,6 @@ public class Main {
         System.out.println("Greutatea medie a colectiei: " + colectie.medie());
     }
 }
-
-
-
 
 
 
