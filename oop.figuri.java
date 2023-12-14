@@ -39,14 +39,14 @@ class Patrat extends Figura{
         this.latura = latura;
         this.culoare = culoare;
     }
-
+    
     public String getCuloare(){
         return culoare;
     }
 
     @Override
-    public double calculPerimetru() {  //nu am voie sa ii pun parametrii!! cum ii pun in abstract class metoda asa o pun si aici
-        //da ca sa fi sigura mai investigheaza!!
+    public double calculPerimetru() {  //LA OVERRIDE NU AM VOIE SA SCHIMB SEMNATURA METOODEI(nr/tip parametrii)
+        //pentru a face asta folosesc overloading
         return latura*4;
     }
 
@@ -123,7 +123,8 @@ class Observator{
         System.out.println("Figurile din colectie sunt: ");
         for(i=0; i<colectieFiguri.length; i++)
         {
-            System.out.println(this.colectieFiguri[i].toString());
+            System.out.println(this.colectieFiguri[i].toString());  //imi va afisa toStringul de la tipul de figura la care ma aflu
+            //cand parcurg vectorul
         }
     }
 }
