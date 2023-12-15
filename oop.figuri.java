@@ -27,8 +27,15 @@ aplicatii.*/
 abstract class Figura{
     public String culoare;
     public abstract double calculPerimetru();
-
+    //nu uita ca la clase abstracte nu am voie sa explicitez functia, ci doar sa o apelez, fiindca fiind o clasa ABSTRACTA, nu stiu inca despre ce figura e vorba
+    //ca sa pot sa descriu in detaliu functia, aici scriu cazurile generale, valabile pentru TOATE subclasele acesteia
+    //also, nu ai voie cu private sau final(adica nu ai voie sa mai faci overriding la metoda respectiva) fiindca ar da 
+    //cap in cap cu scopul folosirii claselor abstracte
     public abstract String getCuloare();
+    //SI INCA O CHESTIE(ultima promit)
+    //la metodele din clasele abstracte, le faci DOAR overriding, adica pastrezi semnatura, daca vrei sa le adaugi/schimbi parametrii functiei,
+    //atunci inseamna ca faci overloading, si nu e permis sa faci asta pentru metode din clasele abstract, le pastrezi asa, doar le schimbi continutul
+    //(specific fiecarei subclase in parte) si ATAT, pups bye si nimicește testul ala fato!
 }
 
 class Patrat extends Figura{
@@ -36,6 +43,7 @@ class Patrat extends Figura{
 
     //facem constructorul pentru patrat:
     public Patrat(String culoare, int latura){
+       //super(culoare) este gresit, fiindca nu am un constructor la clasa parinte a patratului pentru a putea folosi super
         this.latura = latura;
         this.culoare = culoare;
     }
@@ -68,7 +76,7 @@ class Cerc extends Figura{
         return culoare;
     }
     public double calculPerimetru(){
-        return raza * 2 * 3.14;
+        return raza * 2 * Math.PI;
     }
 
     public String toString(){
@@ -121,7 +129,7 @@ class Observator{
     public void afiseazaColectieFiguri(){
         int i;
         System.out.println("Figurile din colectie sunt: ");
-        for(i=0; i<colectieFiguri.length; i++)
+        for(i=0; i<nrFiguri; i++)
         {
             System.out.println(this.colectieFiguri[i].toString());  //imi va afisa toStringul de la tipul de figura la care ma aflu
             //cand parcurg vectorul
@@ -133,9 +141,22 @@ class Main{
     public static void main(String[] args){
         Observator observator = new Observator();
 
-        Figura f1 = new Patrat("rosu", 5);
-        Figura f2 = new Triunghi("albastru", 10);
-        Figura f3 = new Cerc("mov", 3);
+        Figura f1 = new Patrat("rosu", 5); //upcasting
+        Figura f2 = new Triunghi("albastru", 10);  //upcasting
+        Figura f3 = new Cerc("mov", 3);  //upcasting
+
+       // BUN, AICI E IMPORTANT!!
+       //ddddeci, cand faci upcasting ca mai sus, toate metodele si parametrii publici ai claselor parinte(Figura) sunt vizibili pentru subclasa ta(Patrat, Cerc, Triunghi)
+       //darrr, daca ai de exemplu metode specifice unei anumite subclase(chestii pe care doar clasa aia stie sa le faca, nu apar in clasa parinte)
+       //atunci ele nu pot fi apelate de obiectul creat(ex f1.getAriePatrat() -metoda ce apare doar in patrat- o sa dea eroare)
+       //asta se intampla fiindca obiectul nostru este de tip FIGURA, care nu stie despre ce e vorba in subclasa sa, deci daca vrem sa lucram cu metodele specifice
+       //din subclasele noastre vom face downcasting
+
+       //tot la upcasting:
+       //TOTUSI, daca avem o metoda careia ii facem overriding(adica incercam sa o adaptam la conditiile clasei) in subclasa noastra, 
+       //(metoda ce evident apare in clasa parinte), atunci cand vom apela metoda 
+       //se va aplica implementarea care apare in subclasa noastra!!!
+       //bun gata doda, pupix
 
         observator.adaugaFigura(f1);
         observator.adaugaFigura(f2);
