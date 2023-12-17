@@ -100,7 +100,7 @@ class CircuitSerie extends CircuitElectric{
         int i;
         for(i=0; i<circuiteSerie.length; i++)
         {
-            if(circuiteSerie[i]==subCircuit)
+            if(circuiteSerie[i].contineSubCircuit(subCircuit))
             {
                 return true;
             }
@@ -139,7 +139,7 @@ class CircuitParalel extends CircuitElectric{
         int i;
         for(i=0; i<circuiteParalele.length; i++)
         {
-            if(circuiteParalele[i] == subCircuit)
+            if(circuiteParalele[i].contineSubCircuit(subCircuit))
             {
                 return true;
             }
