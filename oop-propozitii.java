@@ -73,7 +73,7 @@ class Negatie extends Propozitie {
 
     @Override
     public Propozitie faraImplicatii() {
-        return new Negatie(propozitieNegata.faraImplicatii());
+        return new Negatie(propozitieNegata.faraImplicatii());  
     }
 
     @Override
@@ -94,7 +94,8 @@ class SauMultiplu extends Propozitie {
         Propozitie[] propozitiiFaraImplicatii = new Propozitie[propozitii.length];
         int i;
         for (i=0; i<propozitii.length; i++) {
-            propozitiiFaraImplicatii[i] = propozitii[i].faraImplicatii();
+            propozitiiFaraImplicatii[i] = propozitii[i].faraImplicatii();  //voi folosi faraImplicatii de la propozitia pe care am in acest moment
+        //adica daca am o negatie, atunci va fi apelata metoda faraImplicatii() din cadrul ei
         }
         return new SauMultiplu(propozitiiFaraImplicatii);
     }
