@@ -24,12 +24,15 @@ metodei main.
  • Sa se explice care sunt avantajele folosirii polimorfismului in cadrul acestei
 aplicatii.*/
 
+import java.util.ArrayList;
+import java.util.List;
+
 abstract class Figura{
     public String culoare;
     public abstract double calculPerimetru();
     //nu uita ca la clase abstracte nu am voie sa explicitez functia, ci doar sa o apelez, fiindca fiind o clasa ABSTRACTA, nu stiu inca despre ce figura e vorba
     //ca sa pot sa descriu in detaliu functia, aici scriu cazurile generale, valabile pentru TOATE subclasele acesteia
-    //also, nu ai voie cu private sau final(adica nu ai voie sa mai faci overriding la metoda respectiva) fiindca ar da 
+    //also, nu ai voie cu private sau final(adica nu ai voie sa mai faci overriding la metoda respectiva) fiindca ar da
     //cap in cap cu scopul folosirii claselor abstracte
     public abstract String getCuloare();
     //SI INCA O CHESTIE(ultima promit)
@@ -43,11 +46,11 @@ class Patrat extends Figura{
 
     //facem constructorul pentru patrat:
     public Patrat(String culoare, int latura){
-       //super(culoare) este gresit, fiindca nu am un constructor la clasa parinte a patratului pentru a putea folosi super
+        //super(culoare) este gresit, fiindca nu am un constructor la clasa parinte a patratului pentru a putea folosi super
         this.latura = latura;
         this.culoare = culoare;
     }
-    
+
     public String getCuloare(){
         return culoare;
     }
@@ -106,8 +109,9 @@ class Triunghi extends Figura{
     }
 }
 
-class Observator{
 
+/*
+class Observator{
     private int nrFiguri;
     private Figura[] colectieFiguri = new Figura[10];  //presupunem ca nu putem sa avem mai mult de 10 figuri intr-o colectie
     public void adaugaFigura(Figura figura){
@@ -136,6 +140,29 @@ class Observator{
         }
     }
 }
+*/
+
+class Observator{
+    //private Figura[] colectieFiguri = new Figura[10];  //presupunem ca nu putem sa avem mai mult de 10 figuri intr-o colectie
+    private List<Figura> colectieFiguri = new ArrayList<>();
+    public void adaugaFigura(Figura figura){
+        colectieFiguri.add(figura);
+    }
+
+    public void anuntaModificare(Figura figura){
+        System.out.println("Starea figurii a fost modificata: " + figura.toString());
+    }
+
+    public void afiseazaColectieFiguri(){
+        int i;
+        System.out.println("Figurile din colectie sunt: ");
+        for(i=0; i<colectieFiguri.size(); i++)
+        {
+            System.out.println(colectieFiguri.get(i).toString());  //imi va afisa toStringul de la tipul de figura la care ma aflu
+            //cand parcurg vectorul
+        }
+    }
+}
 
 class Main{
     public static void main(String[] args){
@@ -145,18 +172,18 @@ class Main{
         Figura f2 = new Triunghi("albastru", 10);  //upcasting
         Figura f3 = new Cerc("mov", 3);  //upcasting
 
-       // BUN, AICI E IMPORTANT!!
-       //ddddeci, cand faci upcasting ca mai sus, toate metodele si parametrii publici ai claselor parinte(Figura) sunt vizibili pentru subclasa ta(Patrat, Cerc, Triunghi)
-       //darrr, daca ai de exemplu metode specifice unei anumite subclase(chestii pe care doar clasa aia stie sa le faca, nu apar in clasa parinte)
-       //atunci ele nu pot fi apelate de obiectul creat(ex f1.getAriePatrat() -metoda ce apare doar in patrat- o sa dea eroare)
-       //asta se intampla fiindca obiectul nostru este de tip FIGURA, care nu stie despre ce e vorba in subclasa sa, deci daca vrem sa lucram cu metodele specifice
-       //din subclasele noastre vom face downcasting
+        // BUN, AICI E IMPORTANT!!
+        //ddddeci, cand faci upcasting ca mai sus, toate metodele si parametrii publici ai claselor parinte(Figura) sunt vizibili pentru subclasa ta(Patrat, Cerc, Triunghi)
+        //darrr, daca ai de exemplu metode specifice unei anumite subclase(chestii pe care doar clasa aia stie sa le faca, nu apar in clasa parinte)
+        //atunci ele nu pot fi apelate de obiectul creat(ex f1.getAriePatrat() -metoda ce apare doar in patrat- o sa dea eroare)
+        //asta se intampla fiindca obiectul nostru este de tip FIGURA, care nu stie despre ce e vorba in subclasa sa, deci daca vrem sa lucram cu metodele specifice
+        //din subclasele noastre vom face downcasting
 
-       //tot la upcasting:
-       //TOTUSI, daca avem o metoda careia ii facem overriding(adica incercam sa o adaptam la conditiile clasei) in subclasa noastra, 
-       //(metoda ce evident apare in clasa parinte), atunci cand vom apela metoda 
-       //se va aplica implementarea care apare in subclasa noastra!!!
-       //bun gata doda, pupix
+        //tot la upcasting:
+        //TOTUSI, daca avem o metoda careia ii facem overriding(adica incercam sa o adaptam la conditiile clasei) in subclasa noastra,
+        //(metoda ce evident apare in clasa parinte), atunci cand vom apela metoda
+        //se va aplica implementarea care apare in subclasa noastra!!!
+        //bun gata doda, pupix
 
         observator.adaugaFigura(f1);
         observator.adaugaFigura(f2);
@@ -181,6 +208,7 @@ class Main{
     This flexibility and abstraction contribute to a more maintainable and extensible design.
      */
 }
+
 
 /*
 METODA 2:
